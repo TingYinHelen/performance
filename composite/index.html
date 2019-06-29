@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .wrapper {
+            display: flex;
+        }
+        .box1, .box2  {
+            width: 300px;
+            height: 300px;
+        }
+        .no-composite .box1 {
+            background: red;
+        }
+        .composite .box2 {
+            background: green;
+            will-change: transform;
+        }
+
+    </style>
+</head>
+<body>
+    <section class="wrapper">
+        <section class="no-composite">
+            <div class="box1"></div>
+        </section>
+        <section class="composite">
+            <div class="box2"></div>
+        </section>
+    </section>
+</body>
+</html>
