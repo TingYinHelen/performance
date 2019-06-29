@@ -34,7 +34,6 @@
     app.enableApp = true;
   
     app.init = function () {
-      console.log('movers-----', movers);
       if (movers) {
         bodySize = document.body.getBoundingClientRect();
         for (var i = 0; i < movers.length; i++) {

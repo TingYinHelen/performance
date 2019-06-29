@@ -23,11 +23,12 @@
         maxHeight = Math.floor(bodySize.height - ballSize.height),
         maxWidth = 97, // 100vw - width of square (3vw)
         incrementor = 10,
-        distance = 1,
+        distance = 3,
         frame,
         minimum = 10,
         subtract = document.querySelector('.subtract'),
-        add = document.querySelector('.add');
+        add = document.querySelector('.add'),
+        positions = [];
         // pos = 0;
 
 
@@ -49,19 +50,19 @@
       }
       for (var i = 0; i < app.count; i++) {
         var m = proto.cloneNode();
-        var top = Math.floor(Math.random() * (maxHeight));
-        if (top === maxHeight) {
+        const item = {
+          id: i,
+          left: (i / (app.count / maxWidth)),
+          top: Math.floor(Math.random() * (maxHeight))
+        };
+        positions.push(item);
+        if (item.top === maxHeight) {
           m.classList.add('up');
         } else {
           m.classList.add('down');
         }
-        m.style.left = (i / (app.count / maxWidth)) + 'vw';
-
-        console.log('top----', top);
-
-        // m.style.transform = trans top + 'px';
-        m.style.transform = `translateY(${top}px)`;
-        // console.log('m.style.transform------', m.style.transform);
+        m.style.left = `${item.left}vw`;
+        m.style.transform = `translateY(${item.top}px)`;
         document.body.appendChild(m);
       }
       movers = document.querySelectorAll('.mover');
@@ -73,40 +74,25 @@
       // var pos = 0;
       for (var i = 0; i < app.count; i++) {
         var m = movers[i];
-        if (!app.optimize) {
+        // var pos = m.style.transform.split('(')[1].slice(0, m.style.transform.split('(')[1].indexOf('px'));
+        // if (!app.optimize) {
           if (m.classList.contains('down')) {
-            app.pos = app.pos + distance;
+            positions[i].top += distance;
           } else {
-            app.pos = app.pos - distance;
+            positions[i].top -= distance;
           }
-          if (app.pos < 0) app.pos = 0;
-          if (app.pos > maxHeight) app.pos = maxHeight;
+          if (positions[i].top < 0) positions[i].top = 0;
+          if (positions[i].top > maxHeight) positions[i].top = maxHeight;
           
-          m.style.transform = `translateY(${app.pos}px)`;
-          if (app.pos === 0) {
+          m.style.transform = `translateY(${positions[i].top}px)`;
+          if (positions[i].top === 0) {
             m.classList.remove('up');
             m.classList.add('down');
           }
-          if (app.pos === maxHeight) {
+          if (positions[i].top === maxHeight) {
             m.classList.remove('down');
             m.classList.add('up');
           }
-        }
-        //  else {
-        //   var pos = parseInt(m.style.top.slice(0, m.style.top.indexOf('px')));
-        //   m.classList.contains('down') ? pos += distance : pos -= distance;
-        //   if (pos < 0) pos = 0;
-        //   if (pos > maxHeight) pos = maxHeight;
-        //   m.style.top = pos + 'px';
-        //   if (pos === 0) {
-        //     m.classList.remove('up');
-        //     m.classList.add('down');
-        //   }
-        //   if (pos === maxHeight) {
-        //     m.classList.remove('down');
-        //     m.classList.add('up');
-        //   }
-        // }
       }
       frame = window.requestAnimationFrame(app.update);
     }

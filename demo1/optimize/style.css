@@ -44,7 +44,7 @@
   
   .mover {
     height: 3vw;
-    position: absolute;
+    position: fixed;
     z-index: 0;
     /* transform: translateY(300px); */
     /* transform: translateZ(0); */
